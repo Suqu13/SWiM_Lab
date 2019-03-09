@@ -1,6 +1,6 @@
 package com.example.bmi.units
 
-enum class measureUnit(val factor: Float) {
+enum class MeasureUnit(val factor: Float) {
     KILO(1f),
     POUND(2.20462262f),
     CENTIMETER(1f),
