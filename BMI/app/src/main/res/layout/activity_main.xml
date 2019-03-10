@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView6" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" app:layout_constraintHorizontal_bias="0.1"/>
     <TextView
-            android:text="Weight [m]"
+            android:text="Weight [kg]"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/weightText" android:textSize="24sp"

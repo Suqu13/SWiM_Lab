@@ -14,8 +14,6 @@ import com.example.bmi.bmi.BmiForKgCm
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.lang.Exception
-import java.math.RoundingMode.CEILING
-import java.text.DecimalFormat
 
 
 class MainActivity : AppCompatActivity(){
@@ -50,15 +48,13 @@ class MainActivity : AppCompatActivity(){
     private fun analyzeResult(toAnalyze: Double): Triple<Int, Int, String> {
         return when {
             toAnalyze != -1.0 -> {
-                val roundedFormat = DecimalFormat("#.##")
-                roundedFormat.roundingMode = CEILING
-                val roundedRes = roundedFormat.format(toAnalyze).toDouble()
-                when  {
-                    roundedRes < 18.5 -> Triple(R.drawable.ic_toast_neutral_24dp, ContextCompat.getColor(applicationContext ,R.color.blue), "UNDERWEIGHT, $roundedRes")
-                    roundedRes < 25.0 -> Triple(R.drawable.ic_toast_very_happy, ContextCompat.getColor(applicationContext ,R.color.shittyGreen), "NORMAL, $roundedRes")
-                    roundedRes < 30.0  -> Triple(R.drawable.ic_toast_neutral_24dp, ContextCompat.getColor(applicationContext ,R.color.orange), "OVERWEIGHT, $roundedRes")
-                    roundedRes < 35.0  -> Triple(R.drawable.ic_toast_sad_24dp, ContextCompat.getColor(applicationContext ,R.color.red), "OBESE, $roundedRes")
-                    else -> Triple(R.drawable.ic_toast_very_dissatisfied_24dp, ContextCompat.getColor(applicationContext ,R.color.violet), "EXTREMELY OBESE, $roundedRes")
+                val resToAnalyze = Math.round(toAnalyze * 100) / 100.0
+                when {
+                    resToAnalyze < 18.5 -> Triple(R.drawable.ic_toast_neutral_24dp, ContextCompat.getColor(applicationContext ,R.color.blue), "UNDERWEIGHT, $resToAnalyze")
+                    resToAnalyze < 25.0 -> Triple(R.drawable.ic_toast_very_happy, ContextCompat.getColor(applicationContext ,R.color.shittyGreen), "NORMAL, $resToAnalyze")
+                    resToAnalyze < 30.0  -> Triple(R.drawable.ic_toast_neutral_24dp, ContextCompat.getColor(applicationContext ,R.color.orange), "OVERWEIGHT, $resToAnalyze")
+                    resToAnalyze < 35.0  -> Triple(R.drawable.ic_toast_sad_24dp, ContextCompat.getColor(applicationContext ,R.color.red), "OBESE, $resToAnalyze")
+                    else -> Triple(R.drawable.ic_toast_very_dissatisfied_24dp, ContextCompat.getColor(applicationContext ,R.color.violet), "EXTREMELY OBESE, $resToAnalyze")
                 }
             }
             else -> {
