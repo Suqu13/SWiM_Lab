@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BMI</string>
+    <string name="about_me">About me!</string>
+    <string name="imperial_units">Imperial units</string>
 </resources>

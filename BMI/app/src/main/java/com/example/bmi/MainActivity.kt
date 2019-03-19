@@ -8,9 +8,12 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.example.bmi.bmi.BmiForKgCm
+import com.example.bmi.bmi.BmiForLbInch
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.lang.Exception
@@ -18,18 +21,46 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity(){
 
-    //type? (safe calls) - now myToast can be null, even if it is non-null references
+    //type? (safe calls)
     private var myToast: Toast? = null
+    private var myTextViewH: TextView? = null
+    private var myTextViewW: TextView? = null
+    private var imperialUnitsSwitch = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         myToast = Toast(applicationContext)
+        myTextViewH = findViewById(R.id.heightText)
+        myTextViewW = findViewById(R.id.weightText)
         countBtn.setOnClickListener {
             val val1 = validateData()
             val val2 = analyzeResult(val1)
             showToast(val2)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+            if (item!!.itemId == R.id.about_me) {
+
+            } else if (item.itemId == R.id.imperial_units) {
+                imperialUnitsSwitch = !imperialUnitsSwitch
+                if(imperialUnitsSwitch) {
+                    myTextViewH!!.text = "Height [inches]"
+                    myTextViewW!!.text = "Weight [lbs]"
+                } else {
+                    myTextViewH!!.text = "Height [cm]"
+                    myTextViewW!!.text = "Weight [kg]"
+                }
+            } else {
+                return super.onOptionsItemSelected(item)
+            }
+        return true
     }
 
     //Function validates inputs and returns result or -1.0
@@ -38,6 +69,8 @@ class MainActivity : AppCompatActivity(){
             val height = heightNum.text.toString().toDouble()
             val weight = weightNum.text.toString().toDouble()
             if (height > 0.0 && weight > 0.0) {
+                if (imperialUnitsSwitch)
+                    return BmiForLbInch(weight, height).countBmi()
                 return  BmiForKgCm(weight, height).countBmi()
             }
         }
