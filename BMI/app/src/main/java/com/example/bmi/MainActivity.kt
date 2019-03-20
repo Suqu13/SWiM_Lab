@@ -1,13 +1,11 @@
 package com.example.bmi
 
 
-import android.os.Build
+import android.content.Intent
+import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,28 +13,23 @@ import android.widget.*
 import com.example.bmi.bmi.BmiForKgCm
 import com.example.bmi.bmi.BmiForLbInch
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toast_layout.view.*
-import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity(){
 
     //type? (safe calls)
-    private var myToast: Toast? = null
-    private var myTextViewH: TextView? = null
-    private var myTextViewW: TextView? = null
     private var imperialUnitsSwitch = false
+    private var bmiResultDescription: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        myToast = Toast(applicationContext)
-        myTextViewH = findViewById(R.id.heightText)
-        myTextViewW = findViewById(R.id.weightText)
         countBtn.setOnClickListener {
             val val1 = validateData()
-            val val2 = analyzeResult(val1)
-            showToast(val2)
+            analyzeResult(val1)
+        }
+        infoBtn.setOnClickListener {
+            launchInfoActivity()
         }
     }
 
@@ -46,76 +39,134 @@ class MainActivity : AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-            if (item!!.itemId == R.id.about_me) {
-
-            } else if (item.itemId == R.id.imperial_units) {
-                imperialUnitsSwitch = !imperialUnitsSwitch
-                if(imperialUnitsSwitch) {
-                    myTextViewH!!.text = "Height [inches]"
-                    myTextViewW!!.text = "Weight [lbs]"
-                } else {
-                    myTextViewH!!.text = "Height [cm]"
-                    myTextViewW!!.text = "Weight [kg]"
-                }
-            } else {
-                return super.onOptionsItemSelected(item)
-            }
+        when (item!!.itemId){
+            R.id.about_me -> launchAboutActivity()
+            R.id.imperial_units -> onUnitsChange(item)
+            else -> return super.onOptionsItemSelected(item)
+        }
         return true
     }
 
-    //Function validates inputs and returns result or -1.0
+    private fun onUnitsChange(item: MenuItem) {
+        if (bmiContainer.visibility == View.VISIBLE) {
+            bmiContainer.visibility = View.INVISIBLE
+        }
+        heightNum.text.clear()
+        weightNum.text.clear()
+
+        imperialUnitsSwitch = !imperialUnitsSwitch
+        item.isChecked = imperialUnitsSwitch
+        unitsChange()
+    }
+
+    private fun unitsChange() {
+        val myTextViewH: TextView = findViewById(R.id.heightText)
+        val myTextViewW: TextView = findViewById(R.id.weightText)
+        if(imperialUnitsSwitch) {
+            myTextViewH.setText(R.string.heightInch)
+            myTextViewW.setText(R.string.weightLb)
+        } else {
+            myTextViewH.setText(R.string.heightCm)
+            myTextViewW.setText(R.string.weightKg)
+        }
+    }
+
+    private fun launchAboutActivity() {
+        val intent = Intent(this, AboutActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun launchInfoActivity() {
+        val intent = Intent(this, InfoActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("result", findViewById<TextView>(R.id.bmiNumber).text.toString())
+        bundle.putString("status", findViewById<TextView>(R.id.bmiStatus).text.toString())
+        bundle.putString("description", bmiResultDescription)
+        intent.putExtras(bundle)
+        startActivity(intent)
+    }
+
+    private fun countForRightUnits(height: Double, weight: Double ): Double {
+        return if (imperialUnitsSwitch)
+            BmiForLbInch(weight, height).countBmi()
+        else
+            BmiForKgCm(weight, height).countBmi()
+    }
+
+    private fun reactForInvalidData() {
+        if (bmiContainer.visibility == View.VISIBLE)
+            bmiContainer.visibility = View.INVISIBLE
+        bmiResultDescription = null
+        shakeThatPinata()
+    }
+
+
     private fun validateData(): Double {
-        if(!heightNum.text.isBlank() && !weightNum.text.isBlank()) {
-            val height = heightNum.text.toString().toDouble()
-            val weight = weightNum.text.toString().toDouble()
-            if (height > 0.0 && weight > 0.0) {
-                if (imperialUnitsSwitch)
-                    return BmiForLbInch(weight, height).countBmi()
-                return  BmiForKgCm(weight, height).countBmi()
+        var height = 0.0
+        var weight = 0.0
+        var validData = true
+        if (heightNum.text.isBlank()) {
+            heightNum.error = "Provide height!"
+            validData = false
+        } else {
+            height = heightNum.text.toString().toDouble()
+            if (height <= 0) {
+                heightNum.error = "Invalid height!"
+                validData = false
             }
         }
+        if (weightNum.text.isBlank()) {
+            weightNum.error = "Provide weight!"
+            validData = false
+        } else {
+            weight = weightNum.text.toString().toDouble()
+            if (weight <= 0) {
+                weightNum.error = "Invalid weight!"
+                validData = false
+            }
+        }
+        if(validData) {
+            val result = countForRightUnits(height, weight)
+            if (result < 300 && result > 5)
+                return result
+            Toast.makeText(this, "Are you sure that you provided right data?", Toast.LENGTH_SHORT).show()
+        }
+        reactForInvalidData()
         return -1.0
     }
 
     //Function analyzes the result and returns Triple which contains data needed to create custom toast
-    private fun analyzeResult(toAnalyze: Double): Triple<Int, Int, String> {
-        return when {
+    private fun analyzeResult(toAnalyze: Double) {
+        val bmiContainer: ConstraintLayout = findViewById(R.id.bmiContainer)
+        when {
             toAnalyze != -1.0 -> {
                 val resToAnalyze = Math.round(toAnalyze * 100) / 100.0
-                when {
-                    resToAnalyze < 18.5 -> Triple(R.drawable.ic_toast_neutral_24dp, ContextCompat.getColor(applicationContext ,R.color.blue), "UNDERWEIGHT, $resToAnalyze")
-                    resToAnalyze < 25.0 -> Triple(R.drawable.ic_toast_very_happy, ContextCompat.getColor(applicationContext ,R.color.shittyGreen), "NORMAL, $resToAnalyze")
-                    resToAnalyze < 30.0  -> Triple(R.drawable.ic_toast_neutral_24dp, ContextCompat.getColor(applicationContext ,R.color.orange), "OVERWEIGHT, $resToAnalyze")
-                    resToAnalyze < 35.0  -> Triple(R.drawable.ic_toast_sad_24dp, ContextCompat.getColor(applicationContext ,R.color.red), "OBESE, $resToAnalyze")
-                    else -> Triple(R.drawable.ic_toast_very_dissatisfied_24dp, ContextCompat.getColor(applicationContext ,R.color.violet), "EXTREMELY OBESE, $resToAnalyze")
-                }
-            }
-            else -> {
-                shakeThatPinata()
-                Triple(R.drawable.ic_toast_error_24dp, ContextCompat.getColor(applicationContext ,R.color.black), "FILL THE GAPS")
+                val (text, color, info) = when {
+                        resToAnalyze < 18.5 -> Triple("UNDERWEIGHT", ContextCompat.getColor(applicationContext, R.color.lapis_lazuli), getString(R.string.underweight_info))
+                        resToAnalyze < 25.0 -> Triple("NORMAL",  ContextCompat.getColor(applicationContext, R.color.verdigris), getString(R.string.normal_info))
+                        resToAnalyze < 30.0  -> Triple("OVERWEIGHT", ContextCompat.getColor(applicationContext, R.color.orange), getString(R.string.overweight_info))
+                        resToAnalyze < 35.0  -> Triple("OBESE",  ContextCompat.getColor(applicationContext,  R.color.pompeian_roses), getString(R.string.obese_info))
+                        else -> Triple("EXTREMELY OBESE",  ContextCompat.getColor(applicationContext,  R.color.violet), getString(R.string.extremely_obese_info_info))
+                    }
+                if (bmiContainer.visibility == View.INVISIBLE)
+                    bmiContainer.visibility = View.VISIBLE
+                changeResultAttributes(resToAnalyze, text, color, info)
             }
         }
     }
 
-    //Function sets attributes of toast like text, background color and icon,
-    private fun showToast(toShow: Triple<Int, Int, String>) {
-        val (iconResource, colorValue, message) = toShow
-        //!! (not-null assertion) - converts any value to a non-null type and throws an exception if the value is null
-        try {
-            val layout: View = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.toast_root))
-            myToast!!.setGravity(Gravity.BOTTOM, 0, 330)
-            myToast!!.duration = Toast.LENGTH_LONG
-            myToast!!.view = layout
-            (myToast!!.view.findViewById(R.id.text_view) as TextView).text = message
-            myToast!!.view.setBackgroundColor(colorValue)
-            myToast!!.view.image_view.setImageResource(iconResource)
-            myToast!!.show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    private fun changeResultAttributes(result: Double, status: String, color: Int, description: String) {
+        val bmiNumber: TextView = findViewById(R.id.bmiNumber)
+        val bmiStatus: TextView = findViewById(R.id.bmiStatus)
+        val resultText = "%.2f".format(result)
+        bmiNumber.text = resultText
+        bmiStatus.text = status
+        bmiNumber.setTextColor(color)
+        bmiResultDescription = description
     }
 
-    //Function enable using vibration on a phone
+
+    //Function enables using vibration on a phone
     private fun shakeThatPinata() {
         if (Build.VERSION.SDK_INT >= 26) {
             ((getSystemService(VIBRATOR_SERVICE)) as Vibrator).vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
@@ -124,10 +175,36 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    //Function is overriden to kill the toast when user stops the whole app
-    override fun onStop() {
-        myToast!!.cancel()
-        super.onStop()
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState!!.putString("result", bmiNumber.text.toString())
+        outState.putString("status", bmiStatus.text.toString())
+        outState.putInt("color", bmiNumber.currentTextColor)
+        outState.putBoolean("unitsSwitch", imperialUnitsSwitch)
+        outState.putString("description", bmiResultDescription)
+        outState.putInt("visible", bmiContainer.visibility)
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        imperialUnitsSwitch = savedInstanceState!!.getBoolean("unitsSwitch")
+        if(imperialUnitsSwitch)
+            invalidateOptionsMenu()
+        if ((savedInstanceState.getInt("visible")) != View.INVISIBLE) {
+            bmiContainer.visibility = savedInstanceState.getInt("visible")
+            bmiNumber.text = savedInstanceState.getString("result")
+            bmiStatus.text = savedInstanceState.getString("status")
+            bmiNumber.setTextColor(savedInstanceState.getInt("color"))
+            bmiResultDescription = savedInstanceState.getString("description")
+        }
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.imperial_units)?.isChecked = imperialUnitsSwitch
+        if(imperialUnitsSwitch) {
+            findViewById<TextView>(R.id.heightText).setText(R.string.heightInch)
+            findViewById<TextView>(R.id.weightText).setText(R.string.weightLb)
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
 }

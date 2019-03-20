@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_margin="8dp">
+
+        <TextView
+                android:text="Your result description:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/headerInfo"
+                android:textAlignment="viewStart"
+                android:textSize="18sp"/>
+        <TextView
+                android:layout_below="@+id/headerInfo"
+                android:layout_alignEnd="@+id/headerInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/resultInfo" android:textSize="54sp"
+                android:textAlignment="textEnd"/>
+        <TextView
+                android:layout_below="@+id/resultInfo"
+                android:layout_alignEnd="@+id/resultInfo"
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/statusInfo" android:textAlignment="textEnd"/>
+        <ImageView
+                android:layout_toEndOf="@+id/resultInfo"
+                android:layout_height="130dp"
+                android:layout_width="130dp"
+                android:id="@+id/imageInfo"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:adjustViewBounds="false"
+                app:srcCompat="@drawable/scale_weight"/>
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/statusInfo"
+                android:layout_marginTop="32dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/descriptionInfo"
+                        android:textSize="18sp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

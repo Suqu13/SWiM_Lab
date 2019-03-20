@@ -5,6 +5,5 @@
               android:title="@string/imperial_units"/>
 
         <item android:id="@+id/about_me"
-              android:checkable="true"
               android:title="@string/about_me"/>
 </menu>

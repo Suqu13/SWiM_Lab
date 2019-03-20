@@ -2,4 +2,39 @@
     <string name="app_name">BMI</string>
     <string name="about_me">About me!</string>
     <string name="imperial_units">Imperial units</string>
+    <string name="count">Count BMI</string>
+    <string name="weightKg">Weight [kg]</string>
+    <string name="heightCm">Height [cm]</string>
+    <string name="weightLb">Weight [lbs]</string>
+    <string name="heightInch">Height [inches]</string>
+
+    <string name="underweight_info">
+        A BMI of less than 18.5 indicates that you are underweight, so you may need to put on some weight. You are
+        recommended to ask your doctor or a dietitian for advice.
+    </string>
+    <string name="normal_info">
+        A BMI of 18.5-24.9 indicates that you are at a healthy weight for your height. By maintaining a healthy weight,
+        you lower your risk of developing serious health problems.
+    </string>
+    <string name="overweight_info">
+        A BMI of 25-29.9 indicates that you are slightly overweight. You may be advised to lose some weight for health
+        reasons. You are recommended to talk to your doctor or a dietitian for advice.
+    </string>
+    <string name="obese_info">
+        A BMI of 30-34.9 indicates that you are overweight. Your health may be at risk if you do not lose weight. You
+        are recommended to talk to your doctor or a dietitian for advice.
+    </string>
+    <string name="extremely_obese_info_info">
+        A BMI of over 35 indicates that you are heavily overweight.\n\nDoctors use BMI to define severe obesity rather than
+        a certain number of pounds or a set weight limit, because BMI factors weight in relation to height.\n\nYour health
+        is at risk. In every moment you can get a heart attack or a stroke.\n\nExcessive body weight is associated with
+        various diseases and conditions, particularly cardiovascular diseases, diabetes mellitus type 2, obstructive
+        sleep apnea, certain types of cancer, osteoarthritis, and asthma. As a result, obesity has been found to reduce
+        life expectancy.\n\nYou are strictly recommended to talk to your doctor or a dietitian for advice.
+    </string>
+
+    <string name="authorText">I want to mention that the work is still in progress so be ready for unexpected bugs.</string>
+    <string name="authorHeader">I committed this app!</string>
+    <string name="author">Author:</string>
+    <string name="good_luck">Good luck!</string>
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/scrollView2"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:fillViewport="true"
+            >
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_margin="8dp">
+        <TextView
+                android:textAlignment="center"
+                android:text="@string/author"
+                android:textSize="32sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"/>
+        <ImageView
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" app:srcCompat="@drawable/pony"
+                android:id="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/scrollView2" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/scrollView2" app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:text="@string/authorHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView3" android:textAlignment="center"
+                android:textSize="18sp"/>
+        <TextView
+                android:text="@string/authorText"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView4" android:textAlignment="center"/>
+        <TextView
+                android:text="@string/good_luck"
+                android:layout_marginTop="54dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView5" android:textAlignment="center"
+                android:textSize="36sp"/>
+    </LinearLayout>
+</ScrollView>
