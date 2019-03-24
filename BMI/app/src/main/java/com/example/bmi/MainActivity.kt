@@ -40,8 +40,9 @@ class MainActivity : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId){
-            R.id.about_me -> launchAboutActivity()
             R.id.imperial_units -> onUnitsChange(item)
+            R.id.history -> launchHistoryActivity()
+            R.id.about_me -> launchAboutActivity()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -70,6 +71,10 @@ class MainActivity : AppCompatActivity(){
             myTextViewW.setText(R.string.weightKg)
         }
     }
+
+    private fun launchHistoryActivity() {
+        val intent = Intent(this, HistoryActivity::class.java)
+        startActivity(intent)    }
 
     private fun launchAboutActivity() {
         val intent = Intent(this, AboutActivity::class.java)

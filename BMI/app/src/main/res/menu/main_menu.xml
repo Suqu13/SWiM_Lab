@@ -4,6 +4,8 @@
               android:checkable="true"
               android:title="@string/imperial_units"/>
 
-        <item android:id="@+id/about_me"
-              android:title="@string/about_me"/>
+    <item android:id="@+id/history"
+          android:title="@string/history"/>
+    <item android:id="@+id/about_me"
+          android:title="@string/about_me"/>
 </menu>

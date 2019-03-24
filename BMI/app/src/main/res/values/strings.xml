@@ -37,4 +37,5 @@
     <string name="authorHeader">I committed this app!</string>
     <string name="author">Author:</string>
     <string name="good_luck">Good luck!</string>
+    <string name="history">History</string>
 </resources>
