@@ -1,4 +1,5 @@
 package com.example.bmi
 
-class Result(val height: Double, val weight: Double, val bmiRate: Double, val date: String, val status: String) {
+data class Result(val height: String, val weight: String, val bmiRate: String, val date: String, val status: String) {
+
 }

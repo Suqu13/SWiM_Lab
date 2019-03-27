@@ -13,6 +13,8 @@ import android.widget.*
 import com.example.bmi.bmi.BmiForKgCm
 import com.example.bmi.bmi.BmiForLbInch
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(){
@@ -24,9 +26,11 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        SharedPreferencesService.createSharedPref(this)
+        ResultsHistory.initializeResultHistory(SharedPreferencesService.loadData())
+        SharedPreferencesService.clearData()
         countBtn.setOnClickListener {
-            val val1 = validateData()
-            analyzeResult(val1)
+            analyzeResult(validateData())
         }
         infoBtn.setOnClickListener {
             launchInfoActivity()
@@ -41,7 +45,9 @@ class MainActivity : AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId){
             R.id.imperial_units -> onUnitsChange(item)
-            R.id.history -> launchHistoryActivity()
+            R.id.history -> {
+                launchHistoryActivity()
+            }
             R.id.about_me -> launchAboutActivity()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -115,25 +121,18 @@ class MainActivity : AppCompatActivity(){
             validData = false
         } else {
             height = heightNum.text.toString().toDouble()
-            if (height <= 0) {
-                heightNum.error = "Invalid height!"
-                validData = false
-            }
         }
         if (weightNum.text.isBlank()) {
             weightNum.error = "Provide weight!"
             validData = false
         } else {
             weight = weightNum.text.toString().toDouble()
-            if (weight <= 0) {
-                weightNum.error = "Invalid weight!"
-                validData = false
-            }
         }
         if(validData) {
             val result = countForRightUnits(height, weight)
-            if (result < 300 && result > 5)
+            if (result < 300 && result > 5) {
                 return result
+            }
             Toast.makeText(this, "Are you sure that you provided right data?", Toast.LENGTH_SHORT).show()
         }
         reactForInvalidData()
@@ -146,7 +145,7 @@ class MainActivity : AppCompatActivity(){
         when {
             toAnalyze != -1.0 -> {
                 val resToAnalyze = Math.round(toAnalyze * 100) / 100.0
-                val (text, color, info) = when {
+                val (status, color, info) = when {
                         resToAnalyze < 18.5 -> Triple("UNDERWEIGHT", ContextCompat.getColor(applicationContext, R.color.lapis_lazuli), getString(R.string.underweight_info))
                         resToAnalyze < 25.0 -> Triple("NORMAL",  ContextCompat.getColor(applicationContext, R.color.verdigris), getString(R.string.normal_info))
                         resToAnalyze < 30.0  -> Triple("OVERWEIGHT", ContextCompat.getColor(applicationContext, R.color.orange), getString(R.string.overweight_info))
@@ -155,7 +154,17 @@ class MainActivity : AppCompatActivity(){
                     }
                 if (bmiContainer.visibility == View.INVISIBLE)
                     bmiContainer.visibility = View.VISIBLE
-                changeResultAttributes(resToAnalyze, text, color, info)
+                changeResultAttributes(resToAnalyze, status, color, info)
+               val (weightU, heightU) = if (imperialUnitsSwitch) {
+                   Pair("[lbs]","[inches]")
+                } else {
+                   Pair("[kg]","[cm]")
+               }
+                ResultsHistory.addResultHistoryRecord(Result(heightNum.text.toString() + " " + heightU,
+                    weightNum.text.toString() + " " + weightU, resToAnalyze.toString(),
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()), status))
+                SharedPreferencesService.clearData()
+                SharedPreferencesService.commitChanges(ResultsHistory.getResultsHistory())
             }
         }
     }
@@ -183,11 +192,13 @@ class MainActivity : AppCompatActivity(){
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState!!.putString("result", bmiNumber.text.toString())
-        outState.putString("status", bmiStatus.text.toString())
-        outState.putInt("color", bmiNumber.currentTextColor)
-        outState.putBoolean("unitsSwitch", imperialUnitsSwitch)
-        outState.putString("description", bmiResultDescription)
-        outState.putInt("visible", bmiContainer.visibility)
+        outState.run {
+            putString("status", bmiStatus.text.toString())
+            putInt("color", bmiNumber.currentTextColor)
+            putBoolean("unitsSwitch", imperialUnitsSwitch)
+            putString("description", bmiResultDescription)
+            putInt("visible", bmiContainer.visibility)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
