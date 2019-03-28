@@ -14,17 +14,15 @@ object SharedPreferencesService {
     }
 
     fun loadData(): ArrayList<Result> {
-        val resultsJson = sharedPref!!.getString("results", "")
-        if (resultsJson!!.isEmpty()) return ArrayList()
-        val listType = object : TypeToken<ArrayList<Result>>() {}.type
-        return Gson().fromJson(resultsJson, listType)
+        val resultsJson = sharedPref!!.getString("results", "[]")
+        class Token : TypeToken<ArrayList<Result>>()
+        return Gson().fromJson(resultsJson, Token().type)
     }
 
     fun commitChanges(results: ArrayList<Result>) {
         val editor = sharedPref!!.edit()
         val resultsJson = Gson().toJson(results)
-        editor.putString("results", resultsJson)
-        editor.apply()
+        editor.putString("results", resultsJson).apply()
     }
 
     fun clearData() {

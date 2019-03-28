@@ -17,10 +17,10 @@ class ResultAdapter(private val results: ArrayList<Result>) : RecyclerView.Adapt
     override fun getItemCount() = results.size
 
     override fun onBindViewHolder(holder: ResultHolder, position: Int) {
-        holder.height.text = results[position].height.toString()
-        holder.weight.text = results[position].weight.toString()
+        holder.height.text = results[position].height
+        holder.weight.text = results[position].weight
         holder.date.text = results[position].date
-        holder.bmiRate.text = results[position].bmiRate.toString()
+        holder.bmiRate.text = results[position].bmiRate
         holder.status.text = results[position].status
     }
 

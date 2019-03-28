@@ -9,21 +9,20 @@
 >
 
     <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
-            android:id="@+id/bmiRate"
+            android:id="@+id/bmi_value_textView_record"
             android:textSize="44sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" android:textAlignment="textEnd"
+            app:layout_constraintTop_toBottomOf="@+id/your_bmi_record" android:textAlignment="textEnd"
     />
     <TextView
-            android:text="Your BMI:"
+            android:text="@string/your_bmi_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/bmiRate"
+            app:layout_constraintBottom_toTopOf="@+id/bmi_value_textView_record"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp" android:id="@+id/textView12"
+            android:layout_marginTop="8dp" android:id="@+id/your_bmi_record"
             app:layout_constraintEnd_toStartOf="@+id/guideline2" android:textSize="16sp"
             android:textAlignment="textEnd"
     />
@@ -32,61 +31,59 @@
                                           android:orientation="vertical" app:layout_constraintGuide_percent="0.5"
     />
     <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/status" app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/bmiRate" android:textSize="12sp" android:textAlignment="textEnd"
+            android:id="@+id/status_textView_record" app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/bmi_value_textView_record" android:textSize="12sp" android:textAlignment="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="8dp"/>
     <TextView
-            android:text="Height:"
+            android:text="@string/height_textView_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/textView22" android:textSize="10sp"
+            android:id="@+id/textView22" android:textSize="12sp"
             android:layout_marginTop="32dp"
             android:layout_marginStart="24dp" app:layout_constraintStart_toStartOf="@+id/guideline2"/>
     <TextView
-            android:text="Weight:"
+            android:text="@string/weight_textView_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView23" android:textSize="10sp"
+            android:id="@+id/textView23" android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@+id/textView22"
             app:layout_constraintBottom_toTopOf="@+id/textView21" app:layout_constraintVertical_bias="0.523"
             android:layout_marginStart="24dp" app:layout_constraintStart_toStartOf="@+id/guideline2"/>
     <TextView
-            android:text="Date: "
+            android:text="@string/date_textView_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView21"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/status" android:layout_marginStart="24dp"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/status_textView_record" android:layout_marginStart="24dp"
             android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/height" android:textSize="10sp" app:layout_constraintStart_toEndOf="@+id/textView22"
-            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp"
+            android:id="@+id/height" android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp"
             android:textAlignment="viewStart"
-    />
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"/>
     <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/weight" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/textView23"
-            android:textSize="10sp"
+            android:id="@+id/weight"
+            android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@+id/height" android:textAlignment="viewStart"
             app:layout_constraintBottom_toTopOf="@+id/date"
-    />
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"/>
     <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date" android:textSize="10sp"
-            android:layout_marginStart="8dp" app:layout_constraintStart_toEndOf="@+id/textView21"
-            android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/date" android:textSize="12sp"
+            android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"/>
+    <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                          android:id="@+id/guideline6"
+                                          android:orientation="vertical" app:layout_constraintGuide_percent="0.9"/>
 </android.support.constraint.ConstraintLayout>
