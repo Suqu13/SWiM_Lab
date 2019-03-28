@@ -65,22 +65,22 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/height" android:textSize="12sp"
+            android:id="@+id/height_editText_record" android:textSize="12sp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp"
             android:textAlignment="viewStart"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/weight"
+            android:id="@+id/weight_editText_record"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/height" android:textAlignment="viewStart"
-            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintTop_toBottomOf="@+id/height_editText_record" android:textAlignment="viewStart"
+            app:layout_constraintBottom_toTopOf="@+id/date_editText_record"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date" android:textSize="12sp"
+            android:id="@+id/date_editText_record" android:textSize="12sp"
             android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"

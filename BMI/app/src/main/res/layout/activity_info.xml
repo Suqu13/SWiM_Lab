@@ -11,29 +11,29 @@
             android:layout_margin="8dp">
 
         <TextView
-                android:text="Your result description:"
+                android:text="@string/your_result_description_textView_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/headerInfo"
+                android:id="@+id/header_textView_info"
                 android:textAlignment="viewStart"
                 android:textSize="18sp"/>
         <TextView
-                android:layout_below="@+id/headerInfo"
-                android:layout_alignEnd="@+id/headerInfo"
+                android:layout_below="@+id/header_textView_info"
+                android:layout_alignEnd="@+id/header_textView_info"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/resultInfo" android:textSize="54sp"
+                android:layout_height="wrap_content" android:id="@+id/bmi_value_textView_info" android:textSize="54sp"
                 android:textAlignment="textEnd"/>
         <TextView
-                android:layout_below="@+id/resultInfo"
-                android:layout_alignEnd="@+id/resultInfo"
+                android:layout_below="@+id/bmi_value_textView_info"
+                android:layout_alignEnd="@+id/bmi_value_textView_info"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/statusInfo" android:textAlignment="textEnd"/>
+                android:layout_height="wrap_content" android:id="@+id/status_textView_info" android:textAlignment="textEnd"/>
         <ImageView
-                android:layout_toEndOf="@+id/resultInfo"
+                android:layout_toEndOf="@+id/bmi_value_textView_info"
                 android:layout_height="130dp"
                 android:layout_width="130dp"
-                android:id="@+id/imageInfo"
+                android:id="@+id/scale_imageView_info"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
                 android:adjustViewBounds="false"
@@ -41,14 +41,14 @@
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/statusInfo"
+                android:layout_below="@id/status_textView_info"
                 android:layout_marginTop="32dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/descriptionInfo"
+                        android:id="@+id/description_textView_info"
                         android:textSize="18sp"
                         android:textAppearance="?android:attr/textAppearanceLarge"/>
             </LinearLayout>

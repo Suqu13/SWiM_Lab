@@ -1,8 +1,9 @@
-package com.example.bmi
+package com.example.bmi.history
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.example.bmi.R
 import com.example.bmi.services.HistoryService
 import kotlinx.android.synthetic.main.activity_history.*
 

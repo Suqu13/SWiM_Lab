@@ -12,29 +12,46 @@ import android.view.View
 import android.widget.*
 import com.example.bmi.bmi.BmiForKgCm
 import com.example.bmi.bmi.BmiForLbInch
+import com.example.bmi.history.HistoryActivity
+import com.example.bmi.services.HistoryService
+import com.example.bmi.services.SharedPreferencesService
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(){
 
-    //type? (safe calls)
     private var imperialUnitsSwitch = false
-    private var bmiResultDescription: String? = null
+    private var isCounted = false
+    private var bmiResultDescription: String? = ""
+
+    companion object {
+        const val STATUS_KEY = "status"
+        const val RESULT_KEY = "result"
+        const val VISIBLE_KEY = "visible"
+        const val DESCRIPTION_KEY = "description"
+        const val UNITS_SWITCH_KEY = "unitsSwitch"
+        const val COLOR_KEY = "color"
+        const val BMI_HISTORY_KEY = "bmiHistory"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         SharedPreferencesService.createSharedPref(this)
-        ResultsHistory.initializeResultHistory(SharedPreferencesService.loadData())
-        SharedPreferencesService.clearData()
-        countBtn.setOnClickListener {
-            analyzeResult(validateData())
+        height_edit_text.setHint(R.string.provide_height)
+        weight_editText.setHint(R.string.provide_weight)
+        count_button.setOnClickListener {
+            showFinalResult(validateData())
         }
-        infoBtn.setOnClickListener {
+        info_button.setOnClickListener {
             launchInfoActivity()
         }
+    }
+
+    override fun onResume() {
+        isCounted = false
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -42,12 +59,16 @@ class MainActivity : AppCompatActivity(){
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu!!.findItem(R.id.history).isVisible = !HistoryService.isHistoryEmpty()
+        menu.findItem(R.id.imperial_units).isChecked = imperialUnitsSwitch
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId){
             R.id.imperial_units -> onUnitsChange(item)
-            R.id.history -> {
-                launchHistoryActivity()
-            }
+            R.id.history -> launchHistoryActivity()
             R.id.about_me -> launchAboutActivity()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -55,32 +76,23 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun onUnitsChange(item: MenuItem) {
-        if (bmiContainer.visibility == View.VISIBLE) {
-            bmiContainer.visibility = View.INVISIBLE
-        }
-        heightNum.text.clear()
-        weightNum.text.clear()
-
         imperialUnitsSwitch = !imperialUnitsSwitch
         item.isChecked = imperialUnitsSwitch
+        bmi_container.visibility = View.INVISIBLE
+        height_edit_text.text.clear()
+        weight_editText.text.clear()
         unitsChange()
     }
 
     private fun unitsChange() {
-        val myTextViewH: TextView = findViewById(R.id.heightText)
-        val myTextViewW: TextView = findViewById(R.id.weightText)
-        if(imperialUnitsSwitch) {
-            myTextViewH.setText(R.string.heightInch)
-            myTextViewW.setText(R.string.weightLb)
-        } else {
-            myTextViewH.setText(R.string.heightCm)
-            myTextViewW.setText(R.string.weightKg)
-        }
+        findViewById<TextView>(R.id.height_textView).setText(if (imperialUnitsSwitch) R.string.height_inch else R.string.height_cm)
+        findViewById<TextView>(R.id.weight_textView).setText(if (imperialUnitsSwitch) R.string.weight_lb else R.string.weight_kg)
     }
 
     private fun launchHistoryActivity() {
         val intent = Intent(this, HistoryActivity::class.java)
-        startActivity(intent)    }
+        startActivity(intent)
+    }
 
     private fun launchAboutActivity() {
         val intent = Intent(this, AboutActivity::class.java)
@@ -88,16 +100,18 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun launchInfoActivity() {
-        val intent = Intent(this, InfoActivity::class.java)
         val bundle = Bundle()
-        bundle.putString("result", findViewById<TextView>(R.id.bmiNumber).text.toString())
-        bundle.putString("status", findViewById<TextView>(R.id.bmiStatus).text.toString())
-        bundle.putString("description", bmiResultDescription)
+        bundle.run {
+            putString(RESULT_KEY, findViewById<TextView>(R.id.bmi_value_textView).text.toString())
+            putString(STATUS_KEY, findViewById<TextView>(R.id.bmi_status_textView).text.toString())
+            putString(DESCRIPTION_KEY, bmiResultDescription)
+        }
+        val intent = Intent(this, InfoActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
     }
 
-    private fun countForRightUnits(height: Double, weight: Double ): Double {
+    private fun countWithRightUnits(height: Double, weight: Double ): Double {
         return if (imperialUnitsSwitch)
             BmiForLbInch(weight, height).countBmi()
         else
@@ -105,82 +119,68 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun reactForInvalidData() {
-        if (bmiContainer.visibility == View.VISIBLE)
-            bmiContainer.visibility = View.INVISIBLE
-        bmiResultDescription = null
+        if (bmi_container.visibility == View.VISIBLE)
+            bmi_container.visibility = View.INVISIBLE
         shakeThatPinata()
     }
 
 
     private fun validateData(): Double {
-        var height = 0.0
-        var weight = 0.0
         var validData = true
-        if (heightNum.text.isBlank()) {
-            heightNum.error = "Provide height!"
+        if (height_edit_text.run{text.isBlank() || text.toString().toDouble() > 400}) {
+            height_edit_text.error = getString(R.string.invalid_height_message)
             validData = false
-        } else {
-            height = heightNum.text.toString().toDouble()
         }
-        if (weightNum.text.isBlank()) {
-            weightNum.error = "Provide weight!"
+        if (weight_editText.run{text.isBlank() || text.toString().toDouble() > 1500}) {
+            weight_editText.error = getString(R.string.invalid_weight_message)
             validData = false
-        } else {
-            weight = weightNum.text.toString().toDouble()
         }
         if(validData) {
-            val result = countForRightUnits(height, weight)
+            val result = countWithRightUnits(height_edit_text.text.toString().toDouble(), weight_editText.text.toString().toDouble())
             if (result < 300 && result > 5) {
+                isCounted = true
                 return result
             }
-            Toast.makeText(this, "Are you sure that you provided right data?", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.invalid_result_message), Toast.LENGTH_SHORT).show()
         }
         reactForInvalidData()
         return -1.0
     }
 
-    //Function analyzes the result and returns Triple which contains data needed to create custom toast
-    private fun analyzeResult(toAnalyze: Double) {
-        val bmiContainer: ConstraintLayout = findViewById(R.id.bmiContainer)
+    private fun analyzeResult(toAnalyze: Double) = when {
+        toAnalyze < 18.5 -> Triple(getString(R.string.underweight_status), ContextCompat.getColor(applicationContext, R.color.lapis_lazuli), getString(R.string.underweight_description))
+        toAnalyze < 25.0 -> Triple(getString(R.string.normal_status),  ContextCompat.getColor(applicationContext, R.color.verdigris), getString(R.string.normal_description))
+        toAnalyze < 30.0  -> Triple(getString(R.string.overweight_status), ContextCompat.getColor(applicationContext, R.color.orange), getString(R.string.overweight_description))
+        toAnalyze < 35.0  -> Triple(getString(R.string.obese_status),  ContextCompat.getColor(applicationContext,  R.color.pompeian_roses), getString(R.string.obese_description))
+        else -> Triple(getString(R.string.extremely_obese_status),  ContextCompat.getColor(applicationContext,  R.color.violet), getString(R.string.extremely_obese_description))
+    }
+
+    private fun showFinalResult(toAnalyze: Double) {
+        val bmiContainer: ConstraintLayout = findViewById(R.id.bmi_container)
         when {
             toAnalyze != -1.0 -> {
                 val resToAnalyze = Math.round(toAnalyze * 100) / 100.0
-                val (status, color, info) = when {
-                        resToAnalyze < 18.5 -> Triple("UNDERWEIGHT", ContextCompat.getColor(applicationContext, R.color.lapis_lazuli), getString(R.string.underweight_info))
-                        resToAnalyze < 25.0 -> Triple("NORMAL",  ContextCompat.getColor(applicationContext, R.color.verdigris), getString(R.string.normal_info))
-                        resToAnalyze < 30.0  -> Triple("OVERWEIGHT", ContextCompat.getColor(applicationContext, R.color.orange), getString(R.string.overweight_info))
-                        resToAnalyze < 35.0  -> Triple("OBESE",  ContextCompat.getColor(applicationContext,  R.color.pompeian_roses), getString(R.string.obese_info))
-                        else -> Triple("EXTREMELY OBESE",  ContextCompat.getColor(applicationContext,  R.color.violet), getString(R.string.extremely_obese_info_info))
-                    }
+                val (status, color, info) = analyzeResult(resToAnalyze)
                 if (bmiContainer.visibility == View.INVISIBLE)
                     bmiContainer.visibility = View.VISIBLE
-                changeResultAttributes(resToAnalyze, status, color, info)
-               val (weightU, heightU) = if (imperialUnitsSwitch) {
-                   Pair("[lbs]","[inches]")
-                } else {
-                   Pair("[kg]","[cm]")
-               }
-                ResultsHistory.addResultHistoryRecord(Result(heightNum.text.toString() + " " + heightU,
-                    weightNum.text.toString() + " " + weightU, resToAnalyze.toString(),
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()), status))
-                SharedPreferencesService.clearData()
-                SharedPreferencesService.commitChanges(ResultsHistory.getResultsHistory())
+                changeResultTextViewsAttributes(resToAnalyze, status, color, info)
+                HistoryService.prepareHistoryRecord(resToAnalyze, height_edit_text.text.toString(), weight_editText.text.toString(), status, imperialUnitsSwitch)
             }
         }
     }
 
-    private fun changeResultAttributes(result: Double, status: String, color: Int, description: String) {
-        val bmiNumber: TextView = findViewById(R.id.bmiNumber)
-        val bmiStatus: TextView = findViewById(R.id.bmiStatus)
+    private fun changeResultTextViewsAttributes(result: Double, status: String, color: Int, description: String) {
         val resultText = "%.2f".format(result)
-        bmiNumber.text = resultText
-        bmiStatus.text = status
-        bmiNumber.setTextColor(color)
+        bmi_value_textView.run {
+            text = resultText
+            setTextColor(color)
+        }
+        bmi_status_textView.text = status
         bmiResultDescription = description
     }
 
 
-    //Function enables using vibration on a phone
+    //Function enables using vibration on a phone to signal invalid inputs
     private fun shakeThatPinata() {
         if (Build.VERSION.SDK_INT >= 26) {
             ((getSystemService(VIBRATOR_SERVICE)) as Vibrator).vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
@@ -191,36 +191,42 @@ class MainActivity : AppCompatActivity(){
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState!!.putString("result", bmiNumber.text.toString())
-        outState.run {
-            putString("status", bmiStatus.text.toString())
-            putInt("color", bmiNumber.currentTextColor)
-            putBoolean("unitsSwitch", imperialUnitsSwitch)
-            putString("description", bmiResultDescription)
-            putInt("visible", bmiContainer.visibility)
+        outState!!.run {
+            putString(RESULT_KEY, bmi_value_textView.text.toString())
+            putString(STATUS_KEY, bmi_status_textView.text.toString())
+            putInt(COLOR_KEY, bmi_value_textView.currentTextColor)
+            putBoolean(UNITS_SWITCH_KEY, imperialUnitsSwitch)
+            putString(DESCRIPTION_KEY, bmiResultDescription)
+            putInt(VISIBLE_KEY, bmi_container.visibility)
+        }
+        if (isCounted) {
+            SharedPreferencesService.removeKeyValue(BMI_HISTORY_KEY)
+            SharedPreferencesService.commitHistoryChanges(HistoryService.getResultsHistory())
         }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        imperialUnitsSwitch = savedInstanceState!!.getBoolean("unitsSwitch")
+        imperialUnitsSwitch = savedInstanceState!!.getBoolean(UNITS_SWITCH_KEY)
         if(imperialUnitsSwitch)
             invalidateOptionsMenu()
-        if ((savedInstanceState.getInt("visible")) != View.INVISIBLE) {
-            bmiContainer.visibility = savedInstanceState.getInt("visible")
-            bmiNumber.text = savedInstanceState.getString("result")
-            bmiStatus.text = savedInstanceState.getString("status")
-            bmiNumber.setTextColor(savedInstanceState.getInt("color"))
-            bmiResultDescription = savedInstanceState.getString("description")
+        if ((savedInstanceState.getInt(VISIBLE_KEY)) != View.INVISIBLE) {
+            bmi_container.visibility = savedInstanceState.getInt(VISIBLE_KEY)
+            bmi_value_textView.text = savedInstanceState.getString(RESULT_KEY)
+            bmi_status_textView.text = savedInstanceState.getString(STATUS_KEY)
+            bmi_value_textView.setTextColor(savedInstanceState.getInt(COLOR_KEY))
+            bmiResultDescription = savedInstanceState.getString(DESCRIPTION_KEY)
         }
+        unitsChange()
         super.onRestoreInstanceState(savedInstanceState)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.findItem(R.id.imperial_units)?.isChecked = imperialUnitsSwitch
-        if(imperialUnitsSwitch) {
-            findViewById<TextView>(R.id.heightText).setText(R.string.heightInch)
-            findViewById<TextView>(R.id.weightText).setText(R.string.weightLb)
-        }
-        return super.onPrepareOptionsMenu(menu)
-    }
+    /**But in android spec they are writing about saving data in onPause(). In low memory situation onStop() can be
+    never called, there is no enough memory to keep the activity's process running.**/
+//    override fun onPause() {
+//        if (isCounted) {
+//            SharedPreferencesService.clearData()
+//            SharedPreferencesService.commitHistoryChanges(HistoryService.getResultsHistory())
+//        }
+//        super.onPause()
+//    }
 }
