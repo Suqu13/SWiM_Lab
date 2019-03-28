@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
                                              android:layout_height="match_parent">
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="1.0"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintVertical_bias="0.0"
-            android:layout_margin="8dp">
-
+            android:layout_marginEnd="@dimen/bmi_margin_start_end_general_layout_8"
+            android:layout_marginStart="@dimen/bmi_margin_start_end_general_layout_8"
+            android:layout_marginTop="@dimen/bmi_margin_top_general_layout_8"
+            android:layout_marginBottom="@dimen/bmi_margin_bottom_general_layout_8"
+        >
         <TextView
-                android:text="Your result description:"
+                android:text="@string/your_result_description_textView_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/headerInfo"
+                android:id="@+id/header_textView_info"
                 android:textAlignment="viewStart"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/bmi_text_size_18"/>
         <TextView
-                android:layout_below="@+id/headerInfo"
-                android:layout_alignEnd="@+id/headerInfo"
+                android:layout_below="@+id/header_textView_info"
+                android:layout_alignEnd="@+id/header_textView_info"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/resultInfo" android:textSize="54sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/bmi_value_textView_info"
+                android:textSize="@dimen/bmi_text_size_54"
                 android:textAlignment="textEnd"/>
         <TextView
-                android:layout_below="@+id/resultInfo"
-                android:layout_alignEnd="@+id/resultInfo"
-                android:textSize="24sp"
+                android:layout_below="@+id/bmi_value_textView_info"
+                android:layout_alignEnd="@+id/bmi_value_textView_info"
+                android:textSize="@dimen/bmi_text_size_18"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/statusInfo" android:textAlignment="textEnd"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/status_textView_info"
+                android:textAlignment="textEnd"/>
         <ImageView
-                android:layout_toEndOf="@+id/resultInfo"
-                android:layout_height="130dp"
-                android:layout_width="130dp"
-                android:id="@+id/imageInfo"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/bmi_value_textView_info"
+                android:layout_height="@dimen/bmi_size_image_view_H_130"
+                android:layout_width="@dimen/bmi_size_image_view_H_130"
+                android:id="@+id/scale_imageView_info"
+                android:layout_marginStart="@dimen/bmi_margin_start_image_viewI_16"
                 android:adjustViewBounds="false"
                 app:srcCompat="@drawable/scale_weight"/>
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/statusInfo"
-                android:layout_marginTop="32dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_below="@id/status_textView_info"
+                android:layout_marginTop="@dimen/bmi_margin_top_scroll_viewI_32"
+                >
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/descriptionInfo"
-                        android:textSize="18sp"
+                        android:id="@+id/description_textView_info"
+                        android:textSize="@dimen/bmi_text_size_18"
                         android:textAppearance="?android:attr/textAppearanceLarge"/>
             </LinearLayout>
         </ScrollView>

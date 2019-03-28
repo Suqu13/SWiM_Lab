@@ -2,7 +2,7 @@ package com.example.bmi
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_info.*
 
 class InfoActivity: AppCompatActivity() {
 
@@ -10,8 +10,8 @@ class InfoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
         val bundle = intent.extras
-        findViewById<TextView>(R.id.resultInfo).text = bundle.getString("result")
-        findViewById<TextView>(R.id.statusInfo).text = bundle.getString("status")
-        findViewById<TextView>(R.id.descriptionInfo).text = bundle.getString("description")
+        bmi_value_textView_info.text = bundle!!.getString(MainActivity.RESULT_KEY)
+        status_textView_info.text = bundle.getString(MainActivity.STATUS_KEY)
+        description_textView_info.text = bundle.getString(MainActivity.DESCRIPTION_KEY)
     }
 }
