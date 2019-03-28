@@ -34,13 +34,10 @@ class MainActivity : AppCompatActivity(){
         const val BMI_HISTORY_KEY = "bmiHistory"
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         SharedPreferencesService.createSharedPref(this)
-        height_edit_text.setHint(R.string.provide_height)
-        weight_editText.setHint(R.string.provide_weight)
         count_button.setOnClickListener {
             showFinalResult(validateData())
         }
@@ -124,7 +121,6 @@ class MainActivity : AppCompatActivity(){
         shakeThatPinata()
     }
 
-
     private fun validateData(): Double {
         var validData = true
         if (height_edit_text.run{text.isBlank() || text.toString().toDouble() > 400}) {
@@ -178,7 +174,6 @@ class MainActivity : AppCompatActivity(){
         bmi_status_textView.text = status
         bmiResultDescription = description
     }
-
 
     //Function enables using vibration on a phone to signal invalid inputs
     private fun shakeThatPinata() {

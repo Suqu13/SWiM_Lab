@@ -58,4 +58,5 @@
     <string name="date_textView_record">Date:</string>
     <string name="your_result_description_textView_info">Your result description:</string>
     <string name="it_is_author_s_picture">It is author\'s picture</string>
+    <string name="clear_history">Clear history</string>
 </resources>

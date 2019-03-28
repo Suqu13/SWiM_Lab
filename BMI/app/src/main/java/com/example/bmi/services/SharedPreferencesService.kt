@@ -2,6 +2,7 @@ package com.example.bmi.services
 
 import android.app.Activity
 import android.content.SharedPreferences
+import com.example.bmi.MainActivity
 import com.example.bmi.history.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -14,8 +15,8 @@ object SharedPreferencesService {
             sharedPref = act.getSharedPreferences("bmi_history_file",0)
     }
 
-    fun loadData(): ArrayList<Result> {
-        val resultsJson = sharedPref!!.getString("bmiHistory", "[]")
+    fun loadHistoryData(): ArrayList<Result> {
+        val resultsJson = sharedPref!!.getString(MainActivity.BMI_HISTORY_KEY, "[]")
         class Token : TypeToken<ArrayList<Result>>()
         return Gson().fromJson(resultsJson, Token().type)
     }
@@ -23,7 +24,7 @@ object SharedPreferencesService {
     fun commitHistoryChanges(results: ArrayList<Result>) {
         val editor = sharedPref!!.edit()
         val resultsJson = Gson().toJson(results)
-        editor.putString("bmiHistory", resultsJson).apply()
+        editor.putString(MainActivity.BMI_HISTORY_KEY, resultsJson).apply()
     }
 
     fun removeKeyValue(key: String) {
