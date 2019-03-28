@@ -16,20 +16,11 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <android.support.constraint.Guideline android:layout_width="wrap_content"
-                                              android:layout_height="wrap_content"
-                                              android:id="@+id/guideline3"
-                                              android:orientation="horizontal"
-                                              app:layout_constraintTop_toTopOf="parent"
-                                              app:layout_constraintBottom_toBottomOf="parent"
-                                              app:layout_constraintStart_toStartOf="parent"
-                                              app:layout_constraintEnd_toEndOf="parent"
-                                              app:layout_constraintGuide_percent="0.9"/>
         <android.support.constraint.Guideline android:layout_width="0dp"
                                               android:layout_height="0dp"
                                               android:id="@+id/guideline"
                                               android:orientation="horizontal"
-                                              app:layout_constraintGuide_percent="0.45"/>
+                                              app:layout_constraintGuide_percent="0.68"/>
         <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -39,53 +30,53 @@
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginBottom="@dimen/bmi_margin_bottom_main_image"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:scaleType="fitCenter"
-                android:contentDescription="@string/imageView_description_main"/>
+                android:contentDescription="@string/imageView_description_main"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
         <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="10"
                 android:id="@+id/height_edit_text"
                 android:hint="@string/your_height"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/height_textView"
-                android:layout_marginStart="@dimen/bmi_margin_start_end_edit_textM"
-                android:layout_marginEnd="@dimen/bmi_margin_start_end_edit_textM"/>
+                android:layout_marginEnd="@dimen/bmi_margin_start_end_edit_textM"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM_8"/>
         <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="10"
                 android:id="@+id/weight_editText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weight_textView"
                 android:hint="@string/your_weight"
-                android:layout_marginStart="@dimen/bmi_margin_start_end_edit_textM"
-                android:layout_marginEnd="@dimen/bmi_margin_start_end_edit_textM" />
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="@dimen/bmi_margin_start_end_text_viewM_8"/>
         <TextView
                 android:text="@string/height_cm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/height_textView"
                 android:textSize="@dimen/bmi_text_size_18"
-                app:layout_constraintTop_toBottomOf="@+id/main_imageVew"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
                 android:layout_marginTop="@dimen/bmi_margin_top_text_viewM"
-                android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM"/>
+                android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM"
+                app:layout_constraintTop_toTopOf="parent"/>
         <TextView
                 android:text="@string/weight_kg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/weight_textView"
                 android:textSize="@dimen/bmi_text_size_18"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM"
                 android:layout_marginTop="@dimen/bmi_margin_top_text_viewM"
-                app:layout_constraintTop_toBottomOf="@+id/height_edit_text"/>
+                app:layout_constraintTop_toBottomOf="@+id/height_edit_text"
+                android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"/>
         <Button
                 android:text="@string/count_button_text"
                 android:layout_width="0dp"
@@ -96,23 +87,21 @@
                 android:layout_marginEnd="@dimen/bmi_margin_start_end_count_button"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/bmi_margin_start_end_count_button"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="@dimen/bmi_margin_bottom_count_button"
-                android:layout_marginTop="@dimen/bmi_margin_top_count_button"
-                app:layout_constraintTop_toTopOf="@+id/guideline3"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bmi_container"/>
         <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/bmi_margin_start_end_general_layout_8"
-                android:layout_marginEnd="@dimen/bmi_margin_start_end_general_layout_8"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/count_button"
                 android:visibility="invisible"
                 android:id="@+id/bmi_container"
-                android:layout_marginBottom="@dimen/bmi_margin_bottom_general_layout_8"
-                android:layout_marginTop="@dimen/bmi_margin_top_general_layout_8"
-                app:layout_constraintTop_toBottomOf="@+id/weight_editText">
+                app:layout_constraintTop_toBottomOf="@+id/weight_editText"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/bmi_margin_start_end_general_layout_8"
+                app:layout_constraintStart_toEndOf="@+id/main_imageVew"
+                android:layout_marginStart="@dimen/bmi_margin_start_end_general_layout_8">
             <TextView
                     android:text="@string/your_bmi_text"
                     android:layout_width="wrap_content"
@@ -168,5 +157,10 @@
                     android:layout_marginStart="@dimen/bmi_margin_start_end_image_view_question_mark"
                     android:contentDescription="@string/info_button_description_main"/>
         </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.Guideline android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:id="@+id/guideline4"
+                                              android:orientation="vertical"
+                                              app:layout_constraintGuide_percent="0.42"/>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

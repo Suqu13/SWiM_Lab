@@ -9,6 +9,12 @@
     <string name="height_inch">Height [inches]</string>
     <string name="provide_height">Provide height!</string>
     <string name="provide_weight">Provide weight!</string>
+    <string name="your_height">Your height</string>
+    <string name="your_weight">Your weight</string>
+    <string name="unit_lbs">[lbs]</string>
+    <string name="unit_inches">[inches]</string>
+    <string name="unit_kg">[kg]</string>
+    <string name="unit_cm">[cm]</string>
 
     <string name="underweight_status">UNDERWEIGHT</string>
     <string name="normal_status">NORMAL</string>
@@ -18,7 +24,7 @@
 
     <string name="invalid_height_message">Invalid height!</string>
     <string name="invalid_weight_message">Invalid weight!</string>
-    <string name="invalid_result_message">"Are you sure that you provided right data?"</string>
+    <string name="invalid_result_message">BMI is out of the range, are you sure that you provided the right data?</string>
 
     <string name="underweight_description">
         A BMI of less than 18.5 indicates that you are underweight, so you may need to put on some weight. You are
@@ -42,7 +48,8 @@
         is at risk. In every moment you can get a heart attack or a stroke.\n\nExcessive body weight is associated with
         various diseases and conditions, particularly cardiovascular diseases, diabetes mellitus type 2, obstructive
         sleep apnea, certain types of cancer, osteoarthritis, and asthma. As a result, obesity has been found to reduce
-        life expectancy.\n\nYou are strictly recommended to talk to your doctor or a dietitian for advice.
+        life expectancy.\n\nYou are strictly recommended to talk to your doctor or a dietitian for advice.\n\nJust
+        start thinking about your future!
     </string>
 
     <string name="author_text_textView_about">I want to mention that the work is still in progress so be ready for unexpected bugs.</string>

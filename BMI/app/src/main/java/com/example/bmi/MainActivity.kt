@@ -122,18 +122,15 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun validateData(): Double {
-        var validData = true
-        if (height_edit_text.run{text.isBlank() || text.toString().toDouble() > 400}) {
-            height_edit_text.error = getString(R.string.invalid_height_message)
-            validData = false
-        }
-        if (weight_editText.run{text.isBlank() || text.toString().toDouble() > 1500}) {
-            weight_editText.error = getString(R.string.invalid_weight_message)
-            validData = false
-        }
-        if(validData) {
-            val result = countWithRightUnits(height_edit_text.text.toString().toDouble(), weight_editText.text.toString().toDouble())
-            if (result < 300 && result > 5) {
+        val heightErrorMessage =  Pair(getString(R.string.invalid_height_message), getString(R.string.provide_height))
+        val weightErrorMessage =  Pair(getString(R.string.invalid_weight_message), getString(R.string.provide_weight))
+        val unitFactorW = if (imperialUnitsSwitch) 0.45359237 else 1.0
+        val unitFactorH = if (imperialUnitsSwitch) 2.54 else 1.0
+        val valueHeight = height_edit_text.validate(120 / unitFactorH,280 / unitFactorH, heightErrorMessage)
+        val valueWeight = weight_editText.validate(25 / unitFactorH, 700 / unitFactorW, weightErrorMessage)
+        if(valueHeight != null && valueWeight != null) {
+            val result = countWithRightUnits(valueHeight, valueWeight)
+            if(result > 10 && 300 > result) {
                 isCounted = true
                 return result
             }
@@ -152,15 +149,18 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun showFinalResult(toAnalyze: Double) {
-        val bmiContainer: ConstraintLayout = findViewById(R.id.bmi_container)
         when {
             toAnalyze != -1.0 -> {
+                findViewById<ConstraintLayout>(R.id.bmi_container).visibility = View.VISIBLE
                 val resToAnalyze = Math.round(toAnalyze * 100) / 100.0
                 val (status, color, info) = analyzeResult(resToAnalyze)
-                if (bmiContainer.visibility == View.INVISIBLE)
-                    bmiContainer.visibility = View.VISIBLE
+                val units = if (imperialUnitsSwitch) {
+                    Pair(getString(R.string.unit_inches), getString(R.string.unit_lbs))
+                }else{
+                    Pair(getString(R.string.unit_cm), getString(R.string.unit_kg))
+                }
                 changeResultTextViewsAttributes(resToAnalyze, status, color, info)
-                HistoryService.prepareHistoryRecord(resToAnalyze, height_edit_text.text.toString(), weight_editText.text.toString(), status, imperialUnitsSwitch)
+                HistoryService.prepareHistoryRecord(resToAnalyze, height_edit_text.text.toString(), weight_editText.text.toString(), status, units)
             }
         }
     }
@@ -214,14 +214,4 @@ class MainActivity : AppCompatActivity(){
         unitsChange()
         super.onRestoreInstanceState(savedInstanceState)
     }
-
-    /**But in android spec they are writing about saving data in onPause(). In low memory situation onStop() can be
-    never called, there is no enough memory to keep the activity's process running.**/
-//    override fun onPause() {
-//        if (isCounted) {
-//            SharedPreferencesService.clearData()
-//            SharedPreferencesService.commitHistoryChanges(HistoryService.getResultsHistory())
-//        }
-//        super.onPause()
-//    }
 }

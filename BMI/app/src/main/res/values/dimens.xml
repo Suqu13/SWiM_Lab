@@ -6,15 +6,11 @@
     <dimen name="bmi_margin_bottom_count_button">8dp</dimen>
     <dimen name="bmi_margin_top_count_button">8dp</dimen>
     <dimen name="bmi_margin_start_end_layout_resHM">8dp</dimen>
-    <dimen name="bmi_margin_bottom_layout_resM">16dp</dimen>
-    <dimen name="bmi_margin_top_layout_resM">16dp</dimen>
     <dimen name="bmi_text_size_54">54sp</dimen>
-    <dimen name="bmi_width_height_question_mark">72dp</dimen>
     <dimen name="bmi_margin_bottom_main_image">8dp</dimen>
     <dimen name="bmi_margin_start_end_edit_textM">8dp</dimen>
     <dimen name="bmi_margin_top_text_viewM">8dp</dimen>
     <dimen name="bmi_margin_start_end_text_viewM">16dp</dimen>
-    <dimen name="bmi_margin_start_end_question_mark_buttonM">8dp</dimen>
     <dimen name="bmi_padding_history_record">10dp</dimen>
     <dimen name="bmi_text_size_12">12sp</dimen>
     <dimen name="bmi_margin_start_end_text_viewH">24dp</dimen>
@@ -27,8 +23,15 @@
     <dimen name="bmi_margin_start_end_general_layout_8">8dp</dimen>
     <dimen name="bmi_margin_top_general_layout_8">8dp</dimen>
     <dimen name="bmi_margin_bottom_general_layout_8">8dp</dimen>
-    <dimen name="bmi_margin_top_image_viewI_8">8dp</dimen>
     <dimen name="bmi_margin_start_image_viewI_16">16dp</dimen>
     <dimen name="bmi_margin_top_scroll_viewI_32">32dp</dimen>
     <dimen name="bmi_size_image_view_H_130">130dp</dimen>
+    <dimen name="bmi_margin_bottom_text_viewM">8dp</dimen>
+    <dimen name="bmi_margin_top_text_viewM_16">16dp</dimen>
+    <dimen name="bmi_size_image_view_question_mark">72dp</dimen>
+    <dimen name="bmi_margin_start_end_image_view_question_mark">16dp</dimen>
+    <dimen name="bmi_margin_bottom_image_view_question_mark">8dp</dimen>
+    <dimen name="bmi_margin_top_image_view_question_mark">8dp</dimen>
+    <dimen name="bmi_size_image_viewA">300dp</dimen>
+    <dimen name="bmi_margin_start_end_text_viewM_8">8dp</dimen>
 </resources>

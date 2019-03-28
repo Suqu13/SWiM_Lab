@@ -20,15 +20,10 @@ object HistoryService {
 
     fun isHistoryEmpty() = resultsHistory.isEmpty()
 
-    fun prepareHistoryRecord(result: Double, height: String, weight: String, status: String, units: Boolean) {
-        val (weightU, heightU) = if (units) {
-            Pair("[lbs]","[inches]")
-        } else {
-            Pair("[kg]","[cm]")
-        }
+    fun prepareHistoryRecord(result: Double, height: String, weight: String, status: String, units: Pair<String, String>) {
         HistoryService.addHistoryRecord(
             Result(
-                "$height $heightU", "$weight $weightU", "%.2f".format(result),
+                "$height ${units.first}", "$weight ${units.second}", "%.2f".format(result),
                 SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()), status
             )
         )
