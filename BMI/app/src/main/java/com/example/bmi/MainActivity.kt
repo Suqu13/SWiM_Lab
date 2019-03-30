@@ -77,13 +77,13 @@ class MainActivity : AppCompatActivity(){
         item.isChecked = imperialUnitsSwitch
         bmi_container.visibility = View.INVISIBLE
         height_edit_text.text.clear()
-        weight_editText.text.clear()
+        weight_edit_text.text.clear()
         unitsChange()
     }
 
     private fun unitsChange() {
-        findViewById<TextView>(R.id.height_textView).setText(if (imperialUnitsSwitch) R.string.height_inch else R.string.height_cm)
-        findViewById<TextView>(R.id.weight_textView).setText(if (imperialUnitsSwitch) R.string.weight_lb else R.string.weight_kg)
+        findViewById<TextView>(R.id.height_text_view).setText(if (imperialUnitsSwitch) R.string.height_inch else R.string.height_cm)
+        findViewById<TextView>(R.id.weight_text_view).setText(if (imperialUnitsSwitch) R.string.weight_lb else R.string.weight_kg)
     }
 
     private fun launchHistoryActivity() {
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(){
     private fun launchInfoActivity() {
         val bundle = Bundle()
         bundle.run {
-            putString(RESULT_KEY, findViewById<TextView>(R.id.bmi_value_textView).text.toString())
+            putString(RESULT_KEY, findViewById<TextView>(R.id.bmi_value_text_view).text.toString())
             putString(STATUS_KEY, findViewById<TextView>(R.id.bmi_status_textView).text.toString())
             putString(DESCRIPTION_KEY, bmiResultDescription)
         }
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity(){
         val unitFactorW = if (imperialUnitsSwitch) 0.45359237 else 1.0
         val unitFactorH = if (imperialUnitsSwitch) 2.54 else 1.0
         val valueHeight = height_edit_text.validate(120 / unitFactorH,280 / unitFactorH, heightErrorMessage)
-        val valueWeight = weight_editText.validate(25 / unitFactorH, 700 / unitFactorW, weightErrorMessage)
+        val valueWeight = weight_edit_text.validate(25 / unitFactorH, 700 / unitFactorW, weightErrorMessage)
         if(valueHeight != null && valueWeight != null) {
             val result = countWithRightUnits(valueHeight, valueWeight)
             if(result > 10 && 300 > result) {
@@ -160,14 +160,14 @@ class MainActivity : AppCompatActivity(){
                     Pair(getString(R.string.unit_cm), getString(R.string.unit_kg))
                 }
                 changeResultTextViewsAttributes(resToAnalyze, status, color, info)
-                HistoryService.prepareHistoryRecord(resToAnalyze, height_edit_text.text.toString(), weight_editText.text.toString(), status, units)
+                HistoryService.prepareHistoryRecord(resToAnalyze, height_edit_text.text.toString(), weight_edit_text.text.toString(), status, units)
             }
         }
     }
 
     private fun changeResultTextViewsAttributes(result: Double, status: String, color: Int, description: String) {
         val resultText = "%.2f".format(result)
-        bmi_value_textView.run {
+        bmi_value_text_view.run {
             text = resultText
             setTextColor(color)
         }
@@ -187,9 +187,9 @@ class MainActivity : AppCompatActivity(){
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState!!.run {
-            putString(RESULT_KEY, bmi_value_textView.text.toString())
+            putString(RESULT_KEY, bmi_value_text_view.text.toString())
             putString(STATUS_KEY, bmi_status_textView.text.toString())
-            putInt(COLOR_KEY, bmi_value_textView.currentTextColor)
+            putInt(COLOR_KEY, bmi_value_text_view.currentTextColor)
             putBoolean(UNITS_SWITCH_KEY, imperialUnitsSwitch)
             putString(DESCRIPTION_KEY, bmiResultDescription)
             putInt(VISIBLE_KEY, bmi_container.visibility)
@@ -206,9 +206,9 @@ class MainActivity : AppCompatActivity(){
             invalidateOptionsMenu()
         if ((savedInstanceState.getInt(VISIBLE_KEY)) != View.INVISIBLE) {
             bmi_container.visibility = savedInstanceState.getInt(VISIBLE_KEY)
-            bmi_value_textView.text = savedInstanceState.getString(RESULT_KEY)
+            bmi_value_text_view.text = savedInstanceState.getString(RESULT_KEY)
             bmi_status_textView.text = savedInstanceState.getString(STATUS_KEY)
-            bmi_value_textView.setTextColor(savedInstanceState.getInt(COLOR_KEY))
+            bmi_value_text_view.setTextColor(savedInstanceState.getInt(COLOR_KEY))
             bmiResultDescription = savedInstanceState.getString(DESCRIPTION_KEY)
         }
         unitsChange()

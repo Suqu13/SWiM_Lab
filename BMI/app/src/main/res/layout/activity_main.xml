@@ -34,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:srcCompat="@drawable/body"
-                android:id="@+id/main_imageVew"
+                android:id="@+id/main_image_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
                 android:hint="@string/your_height"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/height_textView"
+                app:layout_constraintTop_toBottomOf="@+id/height_text_view"
                 android:layout_marginStart="@dimen/bmi_margin_start_end_edit_textM"
                 android:layout_marginEnd="@dimen/bmi_margin_start_end_edit_textM"/>
         <EditText
@@ -59,10 +59,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/weight_editText"
+                android:id="@+id/weight_edit_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weight_textView"
+                app:layout_constraintTop_toBottomOf="@+id/weight_text_view"
                 android:hint="@string/your_weight"
                 android:layout_marginStart="@dimen/bmi_margin_start_end_edit_textM"
                 android:layout_marginEnd="@dimen/bmi_margin_start_end_edit_textM" />
@@ -70,9 +70,9 @@
                 android:text="@string/height_cm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/height_textView"
+                android:id="@+id/height_text_view"
                 android:textSize="@dimen/bmi_text_size_18"
-                app:layout_constraintTop_toBottomOf="@+id/main_imageVew"
+                app:layout_constraintTop_toBottomOf="@+id/main_image_view"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/bmi_margin_top_text_viewM"
                 android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM"/>
@@ -80,7 +80,7 @@
                 android:text="@string/weight_kg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/weight_textView"
+                android:id="@+id/weight_text_view"
                 android:textSize="@dimen/bmi_text_size_18"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/bmi_margin_start_end_text_viewM"
@@ -112,12 +112,12 @@
                 android:id="@+id/bmi_container"
                 android:layout_marginBottom="@dimen/bmi_margin_bottom_general_layout_8"
                 android:layout_marginTop="@dimen/bmi_margin_top_general_layout_8"
-                app:layout_constraintTop_toBottomOf="@+id/weight_editText">
+                app:layout_constraintTop_toBottomOf="@+id/weight_edit_text">
             <TextView
                     android:text="@string/your_bmi_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/bmi_value_textView"
+                    app:layout_constraintBottom_toTopOf="@+id/bmi_value_text_view"
                     app:layout_constraintEnd_toStartOf="@+id/guideline5"
                     android:layout_marginEnd="@dimen/bmi_margin_start_end_edit_textM"
                     android:layout_marginBottom="@dimen/bmi_margin_bottom_text_viewM"
@@ -132,7 +132,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bmi_value_textView"
+                    android:id="@+id/bmi_value_text_view"
                     android:textSize="@dimen/bmi_text_size_54"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/bmi_status_textView"
-                    app:layout_constraintTop_toBottomOf="@+id/bmi_value_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/bmi_value_text_view"
                     android:layout_marginBottom="@dimen/bmi_margin_top_text_viewM"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintVertical_bias="0.012"
@@ -164,7 +164,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:background="@android:color/transparent"
                     app:srcCompat="@drawable/question_mark"
-                    app:layout_constraintStart_toEndOf="@+id/bmi_value_textView"
+                    app:layout_constraintStart_toEndOf="@+id/bmi_value_text_view"
                     android:layout_marginStart="@dimen/bmi_margin_start_end_image_view_question_mark"
                     android:contentDescription="@string/info_button_description_main"/>
         </android.support.constraint.ConstraintLayout>

@@ -28,7 +28,7 @@ class HistoryActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId){
             R.id.clear -> {
-                SharedPreferencesService.removeKeyValue(MainActivity.RESULT_KEY)
+                SharedPreferencesService.removeKeyValue(MainActivity.BMI_HISTORY_KEY)
                 HistoryService.clearHistoryService()
                 finish()
             }
