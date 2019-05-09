@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "66784672355",
+    "firebase_url": "https://photodownloader-db096.firebaseio.com",
+    "project_id": "photodownloader-db096",
+    "storage_bucket": "photodownloader-db096.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66784672355:android:7238892f3ecd6c04",
+        "android_client_info": {
+          "package_name": "com.example.swim_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYimlA94Zq_tQdBlNU-KvewQthkNYnG0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66784672355-prv3di9pjo7g9cbu3c2u1t91bmcaafl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

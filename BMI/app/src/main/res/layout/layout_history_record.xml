@@ -44,7 +44,7 @@
             app:layout_constraintTop_toBottomOf="@+id/bmi_value_textView_record"
             android:textSize="@dimen/bmi_text_size_12"
             android:textAlignment="textEnd"
-            />
+    />
     <TextView
             android:text="@string/height_textView_record"
             android:layout_width="wrap_content"
