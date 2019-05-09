@@ -27,15 +27,15 @@ class FamilyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragment_recycle_view.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ImageFragmentAdapter(toShow)
         }
     }
 
     private fun getTheMostSimilar(images: ArrayList<Image>?, position: Int) : List<Pair<Image, () -> Int>>{
         val tags = images!![position].tags
-        images.removeAt(position)
-        return images.map{ img->Pair(img, { tags.filter{ img.tags.contains(it) }.count() } ) }
+        val newImagesList = images.filter { images.indexOf(it) != position }
+        return newImagesList.map{ img->Pair(img, { tags.filter{ img.tags.contains(it) }.count() } ) }
             .sortedWith(compareBy { it.second() }).filter { it.second() > 0 }.takeLast(6)
     }
 

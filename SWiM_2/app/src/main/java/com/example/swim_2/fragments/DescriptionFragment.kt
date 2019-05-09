@@ -15,7 +15,23 @@ class DescriptionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_description, container, false)
-        setDescription(arguments!!.getParcelable("image")!!, view)
+        val images = arguments!!.getParcelableArrayList<Image>("images")!!
+        val position = arguments!!.getInt("position")
+        setDescription(images[position], view)
+
+        view.destription_view.setOnClickListener{
+            val bundle= Bundle()
+            bundle.run {
+                putParcelableArrayList("images", images)
+                putInt("position", position)
+            }
+            val fragment = ImageFragment.newInstance()
+            fragment.arguments = bundle
+            fragmentManager!!.beginTransaction().run {
+                replace(R.id.fragment_container, fragment)
+                commit()
+            }
+        }
         return view
     }
 

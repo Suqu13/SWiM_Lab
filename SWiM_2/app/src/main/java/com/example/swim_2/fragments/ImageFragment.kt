@@ -29,7 +29,8 @@ class ImageFragment : Fragment() {
     private fun funReplaceFragments(images: ArrayList<Image>, position: Int) {
         val descriptionFragment = DescriptionFragment.newInstance()
         val bundleDescription = Bundle()
-        bundleDescription.putParcelable("image", images[position])
+        bundleDescription.putParcelableArrayList("images", images )
+        bundleDescription.putInt("position", position)
         descriptionFragment.arguments = bundleDescription
 
         val familyFragment = FamilyFragment.newInstance()
