@@ -9,15 +9,14 @@ import android.view.ViewGroup
 import com.example.swim_2.Image
 import com.example.swim_2.ImageFragmentAdapter
 import com.example.swim_2.R
-import kotlinx.android.synthetic.main.fragment_famili.*
-import kotlinx.android.synthetic.main.fragment_famili.view.*
+import kotlinx.android.synthetic.main.fragment_family.*
 
 class FamilyFragment : Fragment() {
 
     private lateinit var toShow : ArrayList<Image>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_famili, container, false)
+        val view = inflater.inflate(R.layout.fragment_family, container, false)
         toShow = getTheMostSimilar(
             arguments!!.getParcelableArrayList<Image>("images"),
             arguments!!.getInt("position")
