@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.swim_2.Image
 import com.example.swim_2.R
+import com.example.swim_2.SecActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_image.view.*
 import java.text.FieldPosition
@@ -15,33 +16,23 @@ class ImageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_image, container, false)
-        val images = arguments!!.getParcelableArrayList<Image>("images")
-        val position : Int = arguments!!.getInt("position")
+        val image = arguments!!.getParcelable<Image>("image")!!
 
-        loadImage(images!![position], view)
+        loadImage(image, view)
 
         view.imageView.setOnClickListener{
-           funReplaceFragments(images, position)
+           funReplaceFragments()
         }
         return view
     }
 
-    private fun funReplaceFragments(images: ArrayList<Image>, position: Int) {
-        val descriptionFragment = DescriptionFragment.newInstance()
-        val bundleDescription = Bundle()
-        bundleDescription.putParcelableArrayList("images", images )
-        bundleDescription.putInt("position", position)
-        descriptionFragment.arguments = bundleDescription
-
-        val familyFragment = FamilyFragment.newInstance()
-        val bundleFamily= Bundle()
-        bundleFamily.putParcelableArrayList("images", images )
-        bundleFamily.putInt("position", position)
-        familyFragment.arguments = bundleFamily
-
-        fragmentManager!!.beginTransaction().run {
-            replace(R.id.fragment_container, descriptionFragment)
-            add(R.id.fragment_container, familyFragment)
+    private fun funReplaceFragments() {
+        val manager = activity!!.supportFragmentManager
+        manager!!.beginTransaction().run {
+            setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            hide(manager.fragments[0])
+            show(manager.fragments[1])
+            show(manager.fragments[2])
             commit()
         }
     }
@@ -55,6 +46,12 @@ class ImageFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = ImageFragment()
+        fun newInstance(image: Image) : ImageFragment {
+            val bundle = Bundle()
+            bundle.putParcelable("image", image)
+            val fragment = ImageFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

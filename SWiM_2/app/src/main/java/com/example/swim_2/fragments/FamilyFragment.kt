@@ -41,6 +41,13 @@ class FamilyFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = FamilyFragment()
+        fun newInstance(images: ArrayList<Image>, position: Int) :FamilyFragment {
+            val bundle = Bundle()
+            bundle.putParcelableArrayList("images", images)
+            bundle.putInt("position", position)
+            val fragment = FamilyFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

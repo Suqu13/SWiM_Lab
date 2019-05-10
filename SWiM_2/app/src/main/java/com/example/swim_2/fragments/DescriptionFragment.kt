@@ -15,27 +15,27 @@ class DescriptionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_description, container, false)
-        val images = arguments!!.getParcelableArrayList<Image>("images")!!
-        val position = arguments!!.getInt("position")
-        setDescription(images[position], view)
+        val image = arguments!!.getParcelable<Image>("image")!!
+        setDescription(image, view)
 
-        view.destription_view.setOnClickListener{
-            val bundle= Bundle()
-            bundle.run {
-                putParcelableArrayList("images", images)
-                putInt("position", position)
-            }
-            val fragment = ImageFragment.newInstance()
-            fragment.arguments = bundle
-            fragmentManager!!.beginTransaction().run {
-                replace(R.id.fragment_container, fragment)
-                commit()
-            }
+        view.description_card_view.setOnClickListener{
+            funReplaceFragments()
         }
         return view
     }
 
-    private fun setDescription(image: Image, view: View) {
+    private fun funReplaceFragments() {
+        val manager = activity!!.supportFragmentManager
+        manager.beginTransaction().run {
+            setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            show(manager.fragments[0])
+            hide(manager.fragments[1])
+            hide(manager.fragments[2])
+            commit()
+        }
+    }
+
+        private fun setDescription(image: Image, view: View) {
             view.name_textViewF.text = image.name
             view.date_textViewF.text = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(image.date)
             view.tags_textViewF.text = image.tags.joinToString(" #", prefix = "#")
@@ -43,6 +43,12 @@ class DescriptionFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = DescriptionFragment()
+        fun newInstance(image: Image) : DescriptionFragment{
+            val bundle = Bundle()
+            bundle.putParcelable("image", image)
+            val fragment = DescriptionFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }
