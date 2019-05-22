@@ -14,8 +14,7 @@ import kotlin.collections.ArrayList
 class SingleImageFragmentAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<SingleImageFragmentAdapter.ImageHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return ImageHolder(inflater, parent)
+        return ImageHolder(LayoutInflater.from(parent.context), parent)
     }
 
     override fun getItemCount() = images.size

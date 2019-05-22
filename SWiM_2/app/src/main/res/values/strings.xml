@@ -2,4 +2,6 @@
     <string name="app_name">PhotosDownloader</string>
     <string name="image_added">Image added!</string>
     <string name="fill_gaps">Fill the gaps!</string>
+    <string name="error_tag">#error</string>
+    <string name="error_name">Be my unicorn</string>
 </resources>
