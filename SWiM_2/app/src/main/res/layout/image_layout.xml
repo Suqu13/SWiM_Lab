@@ -22,7 +22,7 @@
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:srcCompat="@drawable/error"
-                    android:layout_marginTop="2dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp"/>
+                    android:layout_marginTop="24dp" android:layout_marginStart="2dp" android:layout_marginEnd="2dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/name_text_view"

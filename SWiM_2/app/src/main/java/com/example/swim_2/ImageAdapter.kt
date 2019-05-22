@@ -43,7 +43,7 @@ class ImageAdapter(private val images: ArrayList<Image>, private val error_tag :
                             .toTypedArray()
                             .take(3)
                         holder.tags.text = tags.joinToString(" #", prefix = "#")
-                        images[holder.adapterPosition].tags = tags as ArrayList<String>
+                        images[holder.adapterPosition].tags = ArrayList(tags)
                     }
             }
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
