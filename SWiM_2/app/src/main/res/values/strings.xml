@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">PhotosDownloader</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_added">Image added!</string>
+    <string name="fill_gaps">Fill the gaps!</string>
 </resources>

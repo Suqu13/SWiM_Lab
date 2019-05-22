@@ -1,15 +1,17 @@
-package com.example.swim_2
+package com.example.swim_2.fragments
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.example.swim_2.R
+import com.example.swim_2.models.Image
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.image_fragment_recycle_view.view.*
+import kotlinx.android.synthetic.main.fragment_similar_images_recycler_view.view.*
 import kotlin.collections.ArrayList
 
 
-class ImageFragmentAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<ImageFragmentAdapter.ImageHolder>() {
+class SingleImageFragmentAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<SingleImageFragmentAdapter.ImageHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,7 +27,7 @@ class ImageFragmentAdapter(private val images: ArrayList<Image>) : RecyclerView.
             .into(holder.image)
     }
 
-    class ImageHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.image_fragment_recycle_view, parent, false)) {
+    class ImageHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.fragment_similar_images_recycler_view, parent, false)) {
         val image: ImageView = itemView.image_rec_view
     }
 }

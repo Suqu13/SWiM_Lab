@@ -4,7 +4,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:id="@+id/imgFragmentLayout"
-             tools:context=".fragments.ImageFragment"
+             tools:context=".fragments.SingleImageFragment"
              >
     <ImageView
             android:src="@drawable/error"

@@ -5,21 +5,18 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.swim_2.Image
+import com.example.swim_2.MainActivity.Companion.IMAGE_KEY
+import com.example.swim_2.models.Image
 import com.example.swim_2.R
-import com.example.swim_2.SecActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_image.view.*
-import java.text.FieldPosition
 
-class ImageFragment : Fragment() {
+class SingleImageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_image, container, false)
-        val image = arguments!!.getParcelable<Image>("image")!!
-
+        val image = arguments!!.getParcelable<Image>(IMAGE_KEY)!!
         loadImage(image, view)
-
         view.imageView.setOnClickListener{
            funReplaceFragments()
         }
@@ -46,10 +43,10 @@ class ImageFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(image: Image) : ImageFragment {
+        fun newInstance(image: Image) : SingleImageFragment {
             val bundle = Bundle()
-            bundle.putParcelable("image", image)
-            val fragment = ImageFragment()
+            bundle.putParcelable(IMAGE_KEY, image)
+            val fragment = SingleImageFragment()
             fragment.arguments = bundle
             return fragment
         }

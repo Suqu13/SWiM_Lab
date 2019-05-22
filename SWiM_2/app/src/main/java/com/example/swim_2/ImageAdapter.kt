@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.drawable.Drawable
 import android.graphics.Bitmap
+import com.example.swim_2.models.Image
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.squareup.picasso.Picasso
@@ -17,7 +18,8 @@ import com.squareup.picasso.Target
 import kotlin.collections.ArrayList
 
 
-class ImageAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
+class ImageAdapter(private val images: ArrayList<Image>, private val error_tag : String = "#error",
+                   private val error_name : String = "Be my unicorn!") : RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
 
     private lateinit var target: Target
 
@@ -48,8 +50,8 @@ class ImageAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<
 
             override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
                 holder.image.setImageResource(R.drawable.error)
-                holder.tags.text = "#error"
-                holder.name.text = "ERROR, be my unicorn"
+                holder.tags.text = error_tag
+                holder.name.text = error_name
             }
 
         }

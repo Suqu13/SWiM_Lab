@@ -1,4 +1,4 @@
-package com.example.swim_2
+package com.example.swim_2.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

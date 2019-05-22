@@ -6,20 +6,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.swim_2.Image
-import com.example.swim_2.ImageFragmentAdapter
+import com.example.swim_2.models.Image
+import com.example.swim_2.MainActivity.Companion.IMAGES_KEY
+import com.example.swim_2.MainActivity.Companion.POSITION_KEY
 import com.example.swim_2.R
-import kotlinx.android.synthetic.main.fragment_family.*
+import kotlinx.android.synthetic.main.fragment_similar_images.*
 
-class FamilyFragment : Fragment() {
+class SimilarImagesFragment : Fragment() {
 
     private lateinit var toShow : ArrayList<Image>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_family, container, false)
+        val view = inflater.inflate(R.layout.fragment_similar_images, container, false)
         toShow = getTheMostSimilar(
-            arguments!!.getParcelableArrayList<Image>("images"),
-            arguments!!.getInt("position")
+            arguments!!.getParcelableArrayList<Image>(IMAGES_KEY),
+            arguments!!.getInt(POSITION_KEY)
         ).map {it.first} as ArrayList<Image>
         return view
     }
@@ -27,8 +28,8 @@ class FamilyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragment_recycle_view.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ImageFragmentAdapter(toShow)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, true)
+            adapter = SingleImageFragmentAdapter(toShow)
         }
     }
 
@@ -41,11 +42,11 @@ class FamilyFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(images: ArrayList<Image>, position: Int) :FamilyFragment {
+        fun newInstance(images: ArrayList<Image>, position: Int) :SimilarImagesFragment {
             val bundle = Bundle()
-            bundle.putParcelableArrayList("images", images)
-            bundle.putInt("position", position)
-            val fragment = FamilyFragment()
+            bundle.putParcelableArrayList(IMAGES_KEY, images)
+            bundle.putInt(POSITION_KEY, position)
+            val fragment = SimilarImagesFragment()
             fragment.arguments = bundle
             return fragment
         }

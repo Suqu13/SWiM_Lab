@@ -5,19 +5,19 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.swim_2.Image
+import com.example.swim_2.MainActivity.Companion.IMAGE_KEY
+import com.example.swim_2.models.Image
 import com.example.swim_2.R
-import kotlinx.android.synthetic.main.fragment_description.view.*
+import kotlinx.android.synthetic.main.fragment_image_description.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DescriptionFragment : Fragment() {
+class ImageDescriptionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_description, container, false)
-        val image = arguments!!.getParcelable<Image>("image")!!
+        val view = inflater.inflate(R.layout.fragment_image_description, container, false)
+        val image = arguments!!.getParcelable<Image>(IMAGE_KEY)!!
         setDescription(image, view)
-
         view.description_card_view.setOnClickListener{
             funReplaceFragments()
         }
@@ -43,10 +43,10 @@ class DescriptionFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(image: Image) : DescriptionFragment{
+        fun newInstance(image: Image) : ImageDescriptionFragment{
             val bundle = Bundle()
-            bundle.putParcelable("image", image)
-            val fragment = DescriptionFragment()
+            bundle.putParcelable(IMAGE_KEY, image)
+            val fragment = ImageDescriptionFragment()
             fragment.arguments = bundle
             return fragment
         }
