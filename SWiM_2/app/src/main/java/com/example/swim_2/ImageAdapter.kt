@@ -42,7 +42,7 @@ class ImageAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<
                             .toTypedArray()
                             .take(3)
                         holder.tags.text = tags.joinToString(" #", prefix = "#")
-                        images[holder.adapterPosition].tags.addAll(ArrayList(tags))
+                        images[holder.adapterPosition].tags = (ArrayList(tags))
                     }
             }
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
@@ -50,7 +50,7 @@ class ImageAdapter(private val images: ArrayList<Image>) : RecyclerView.Adapter<
             override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
                 holder.image.setImageResource(R.drawable.error)
                 val errorTag = holder.itemView.resources.getString(R.string.error_tag)
-                images[holder.adapterPosition].tags.add(errorTag.substring(startIndex = 1))
+                images[holder.adapterPosition].tags = arrayListOf(errorTag.substring(startIndex = 1))
                 holder.tags.text = errorTag
                 holder.name.text = holder.itemView.resources.getString(R.string.error_name)
             }
