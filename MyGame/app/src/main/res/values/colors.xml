@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#66C0E5</color>
+    <color name="colorPrimaryDark">#338DB2</color>
+    <color name="colorAccent">#E5E5E5</color>
+    <color name="colorSky">#87CEEB</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="night_sky">#223E65</color>
+</resources>
