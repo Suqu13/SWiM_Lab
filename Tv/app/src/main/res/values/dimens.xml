@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="left_margin_32">32dp</dimen>
+    <dimen name="right_margin_24">24dp</dimen>
+    <dimen name="top_margin_32">32dp</dimen>
+    <dimen name="bottom_margin_32">32dp</dimen>
+    <dimen name="image_margin_32">32dp</dimen>
+
+</resources>
