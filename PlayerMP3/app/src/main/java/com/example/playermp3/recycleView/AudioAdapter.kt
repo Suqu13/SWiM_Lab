@@ -12,11 +12,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.recyclerview_audio.view.*
 import com.bumptech.glide.request.RequestOptions
 import com.example.playermp3.PlayerFragment
-import com.example.playermp3.R
 import com.example.playermp3.model.AudioFile
 import com.example.playermp3.repo.AudioRepository
+import android.view.animation.AnimationUtils
+import android.content.Context
+import com.example.playermp3.R
 
-class AudioAdapter(private val myFragment: PlayerFragment, private val audioFilesList : MutableList<AudioFile> = AudioRepository.repository)
+
+class AudioAdapter(private val context: Context, private val myFragment: PlayerFragment, private val audioFilesList : MutableList<AudioFile> = AudioRepository.repository)
     : RecyclerView.Adapter<AudioAdapter.AudioHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioHolder {
@@ -32,7 +35,14 @@ class AudioAdapter(private val myFragment: PlayerFragment, private val audioFile
         holder.itemView.setOnClickListener{
             AudioRepository.currentAudio = position
             myFragment.initPlayingFromAdapter()
+            setAnimation(holder.cover)
         }
+    }
+
+    private fun setAnimation(viewToAnimate: View) {
+        val anim = AnimationUtils.loadAnimation(context, R.anim.bigger)
+        anim.duration = 1000
+        viewToAnimate.startAnimation(anim)
     }
 
     private fun loadEmbeddedCover(holder: AudioHolder, position: Int) {

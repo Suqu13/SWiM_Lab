@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         AudioRepository.loadAudioFiles(contentResolver)
         val myFragment = launchFragment()
         manager = LinearLayoutManager(this)
-        adapter = AudioAdapter(myFragment)
+        adapter = AudioAdapter(this, myFragment)
         songs_recycler_view.layoutManager = manager
         songs_recycler_view.adapter = adapter
         songs_recycler_view.setHasFixedSize(true)

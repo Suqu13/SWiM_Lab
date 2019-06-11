@@ -82,9 +82,9 @@ class PlayerActivity: AppCompatActivity(), PlayerInterface{
     }
 
     override fun showProgress() {
+        seek_bar.progress = AudioService.mediaPlayer.currentPosition
+        current_time.text = convertTime(AudioService.mediaPlayer.currentPosition)
         if (AudioService.mediaPlayer.isPlaying) {
-            seek_bar.progress = AudioService.mediaPlayer.currentPosition
-            current_time.text = convertTime(AudioService.mediaPlayer.currentPosition)
             runnable = Runnable {
                 runOnUiThread {
                     showProgress()

@@ -15,6 +15,9 @@ import com.example.playermp3.repo.AudioRepository
 import com.example.playermp3.services.AudioService
 import kotlinx.android.synthetic.main.fragment_player.*
 import kotlinx.android.synthetic.main.fragment_player.view.*
+import android.support.v4.app.ActivityOptionsCompat
+
+
 
 class PlayerFragment : Fragment(), PlayerInterface {
 
@@ -51,7 +54,11 @@ class PlayerFragment : Fragment(), PlayerInterface {
 
     private fun launchActivity() {
         val intent = Intent(context, PlayerActivity::class.java)
-        ContextCompat.startActivity(context!!, intent, null)
+        val bundle = ActivityOptionsCompat.makeCustomAnimation(
+            context!!,
+            android.R.anim.fade_in, android.R.anim.fade_out
+        ).toBundle()
+        ContextCompat.startActivity(context!!, intent, bundle)
     }
 
     override fun loadView() {
